@@ -12,7 +12,7 @@ const getHumanChoice = () => { return prompt(`${options[0]} or ${options[1]} or 
 const playRound = (humanChoice , computerChoice) => {
     humanChoice.toLowerCase();
 
-    if(typeof humanChoice === 'string'){
+    if(typeof humanChoice !== 'number'){
         if(humanChoice === 'paper'){
             if(computerChoice === 'scissors'){
                 console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
