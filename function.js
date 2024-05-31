@@ -9,38 +9,40 @@ const getComputerChoice = () => { return options[Math.floor(Math.random() * opti
 
 const getHumanChoice = () => { return prompt(`${options[0]} or ${options[1]} or ${options[2]}`) }
 
-const playRound = (humanChoice , computerChoice) => {
-    humanChoice.toLowerCase();
+const playRound = (humanChoice, computerChoice) => {
+    humanChoice = humanChoice.toLowerCase();
 
-    if(typeof humanChoice !== 'number'){
-        if(humanChoice === 'paper'){
-            if(computerChoice === 'scissors'){
+    if (typeof humanChoice !== 'number' && !Number.isInteger(humanChoice)) {
+        if (humanChoice === computerChoice) {
+            console.log(`It was a tie! (${humanChoice} : ${computerChoice})`);
+        } else if (humanChoice === 'paper') {
+            if (computerChoice === 'scissors') {
                 console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
                 computerScore++;
-            }else{
+            } else {
                 console.log(`You win! ${humanChoice} beats ${computerChoice}`);
                 humanScore++;
             }
-        }else if(humanChoice === 'rock'){
-            if(computerChoice === 'paper'){
+        } else if (humanChoice === 'rock') {
+            if (computerChoice === 'paper') {
                 console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
                 computerScore++;
-            }else{
+            } else {
                 console.log(`You win! ${humanChoice} beats ${computerChoice}`);
                 humanScore++;
             }
-        }else if(humanChoice === 'scissors'){
-            if(computerChoice === 'rock'){
+        } else if (humanChoice === 'scissors') {
+            if (computerChoice === 'rock') {
                 console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
                 computerScore++;
-            }else{
+            } else {
                 console.log(`You win! ${humanChoice} beats ${computerChoice}`);
                 humanScore++;
             }
-        }else{
-            console.log(`it was a tie! (${humanChoice} : ${computerChoice})`);
+        } else {
+            console.log('Invalid choice. Please choose rock, paper, or scissors.');
         }
-    }else{
+    } else {
         console.log('try again...');
         getHumanChoice();
     }
