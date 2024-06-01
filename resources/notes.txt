@@ -1,0 +1,8 @@
+
+
+function main -
+    - remove loop that allows you to only play five rounds
+
+etc - extra
+    - create three buttons for each option (rock , paper , scissors)
+    

@@ -1,68 +1,87 @@
-
-
 let humanScore = 0;
 let computerScore = 0;
+const result = document.createElement('p');
+const resultWrap = document.querySelector('.results');
+const humanResult = document.querySelector('#human');
+const computerResult = document.querySelector('#computer');
+const winner = document.createElement('h3');
 
-const options = ['rock','paper','scissors'];
+const options = ['rock', 'paper', 'scissors'];
 
-const getComputerChoice = () => { return options[Math.floor(Math.random() * options.length)] }
+const getComputerChoice = () => {
+    return options[Math.floor(Math.random() * options.length)];
+}
 
-const getHumanChoice = () => { return prompt(`${options[0]} or ${options[1]} or ${options[2]}`) }
+const getHumanChoice = () => {
+    const rock = document.querySelector('#rock');
+    const paper = document.querySelector('#paper');
+    const scissors = document.querySelector('#scissors');
+
+    rock.addEventListener('click', () => {
+        playRound('rock', getComputerChoice());
+    });
+    paper.addEventListener('click', () => {
+        playRound('paper', getComputerChoice());
+    });
+    scissors.addEventListener('click', () => {
+        playRound('scissors', getComputerChoice());
+    });
+}
 
 const playRound = (humanChoice, computerChoice) => {
-    humanChoice = humanChoice.toLowerCase();
+    if (humanScore >= 5 || computerScore >= 5) {
+        return; // Game already ended
+    }
 
-    if (typeof humanChoice !== 'number' && !Number.isInteger(humanChoice)) {
-        if (humanChoice === computerChoice) {
-            console.log(`It was a tie! (${humanChoice} : ${computerChoice})`);
-        } else if (humanChoice === 'paper') {
-            if (computerChoice === 'scissors') {
-                console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-                computerScore++;
-            } else {
-                console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-                humanScore++;
-            }
-        } else if (humanChoice === 'rock') {
-            if (computerChoice === 'paper') {
-                console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-                computerScore++;
-            } else {
-                console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-                humanScore++;
-            }
-        } else if (humanChoice === 'scissors') {
-            if (computerChoice === 'rock') {
-                console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-                computerScore++;
-            } else {
-                console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-                humanScore++;
-            }
+    if (humanChoice === computerChoice) {
+        result.textContent = `It was a tie! (${humanChoice} : ${computerChoice})`;
+    } else if (humanChoice === 'paper') {
+        if (computerChoice === 'scissors') {
+            result.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
+            computerScore++;
         } else {
-            console.log('Invalid choice. Please choose rock, paper, or scissors.');
+            result.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
+            humanScore++;
+        }
+    } else if (humanChoice === 'rock') {
+        if (computerChoice === 'paper') {
+            result.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
+            computerScore++;
+        } else {
+            result.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
+            humanScore++;
+        }
+    } else if (humanChoice === 'scissors') {
+        if (computerChoice === 'rock') {
+            result.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
+            computerScore++;
+        } else {
+            result.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
+            humanScore++;
         }
     } else {
-        console.log('try again...');
-        getHumanChoice();
+        result.textContent = 'Invalid choice. Please choose rock, paper, or scissors.';
+    }
+
+    humanResult.textContent = humanScore;
+    computerResult.textContent = computerScore;
+    resultWrap.appendChild(result);
+
+    checkWinner();
+}
+
+const checkWinner = () => {
+    if (humanScore >= 5) {
+        winner.textContent = 'The final winner is You!!!';
+        resultWrap.appendChild(winner);
+    } else if (computerScore >= 5) {
+        winner.textContent = 'The final winner is the Computer!!!';
+        resultWrap.appendChild(winner);
     }
 }
 
 const main = () => {
-    let rounds = 0;
-    do{
-        let humanChoice = getHumanChoice();
-        let computerChoice = getComputerChoice();    
-        playRound(humanChoice , computerChoice);
-        rounds++;
-    }while(rounds !== 5);
-
-    if(humanScore > computerScore){
-        console.log(`the final winner is You!!!`)
-    }else{
-        console.log(`the final winner is the Computer!!!`)
-    }
+    getHumanChoice();
 }
 
 main();
-
